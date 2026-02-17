@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://gp3y6vq5c7yv"
+
+[deps]
+
+files=["res://data/artist_config.name.translation", "res://data/artist_config.gender.translation", "res://data/artist_config.age.translation", "res://data/artist_config.acting.translation", "res://data/artist_config.singing.translation", "res://data/artist_config.speech.translation", "res://data/artist_config.appearance.translation", "res://data/artist_config.smarts.translation", "res://data/artist_config.morality.translation", "res://data/artist_config.sports.translation", "res://data/artist_config.rebellion.translation", "res://data/artist_config.sexy.translation", "res://data/artist_config.confidence.translation", "res://data/artist_config.stamina.translation", "res://data/artist_config.stress.translation", "res://data/artist_config.fame.translation"]
+
+source_file="res://data/artist_config.csv"
+dest_files=["res://data/artist_config.name.translation", "res://data/artist_config.gender.translation", "res://data/artist_config.age.translation", "res://data/artist_config.acting.translation", "res://data/artist_config.singing.translation", "res://data/artist_config.speech.translation", "res://data/artist_config.appearance.translation", "res://data/artist_config.smarts.translation", "res://data/artist_config.morality.translation", "res://data/artist_config.sports.translation", "res://data/artist_config.rebellion.translation", "res://data/artist_config.sexy.translation", "res://data/artist_config.confidence.translation", "res://data/artist_config.stamina.translation", "res://data/artist_config.stress.translation", "res://data/artist_config.fame.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -1,0 +1,22 @@
+{
+	"items": {
+		"item_001": {
+			"name": "Microphone",
+			"cost": 500,
+			"description": "A basic microphone for practice."
+		}
+	},
+	"events": {
+		"event_001": {
+			"title": "Debut Concert",
+			"description": "Your first public appearance."
+		}
+	},
+	"awards": {
+		"golden_star": {
+			"name": "Golden Star Award",
+			"month": 12,
+			"day": 25
+		}
+	}
+}

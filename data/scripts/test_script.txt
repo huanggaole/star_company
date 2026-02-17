@@ -1,0 +1,9 @@
+title: Test Script
+left: secretary
+Secretary: Welcome to your new office, Boss!
+right: manager
+Manager: Thanks. It looks... empty.
+Secretary: Don't worry, we will fill it with trophies soon!
+bg: office_night
+Secretary: It's getting late.
+Manager: Let's call it a day.

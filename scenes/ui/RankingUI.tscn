@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://rankingui001"]
+
+[ext_resource type="Script" path="res://scripts/ui/RankingUI.gd" id="1_rankingui"]
+
+[node name="RankingUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rankingui")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+text = "Weekly Rankings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Movies" type="VBoxContainer" parent="Panel/TabContainer"]
+layout_mode = 2
+
+[node name="Music" type="VBoxContainer" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TV" type="VBoxContainer" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Ads" type="VBoxContainer" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+text = "X"
+
+[node name="UpdateButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Update"
+
+[connection signal="pressed" from="Panel/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Panel/UpdateButton" to="." method="_on_update_button_pressed"]

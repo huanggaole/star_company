@@ -1,0 +1,21 @@
+# Test Script for Naninovel System
+@bg id:office_day
+@char id:secretary pos:center
+Secretary: Hello Boss! Welcome to the new system.
+@set Score=0
+
+# ChoiceStart
+Secretary: Do you like the new syntax?
+@if Score==10
+Secretary: You already gave me points!
+@else
+Secretary: I will give you points now.
+@set Score=10
+@endif
+
+Secretary: Current score is {Score}.
+@goto End
+
+# End
+@char id:none
+Secretary: Goodbye!

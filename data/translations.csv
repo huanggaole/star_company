@@ -1,0 +1,40 @@
+key,en,zh
+MAIN_MENU_NEW_GAME,New Game,开始新游戏
+MAIN_MENU_LOAD_GAME,Load Game,读取进度
+MAIN_MENU_SETTINGS,Settings,游戏设置
+MAIN_MENU_EXIT,Exit,退出游戏
+SETTINGS_LANGUAGE,Language,语言
+SETTINGS_CLOSE,Close,关闭
+OFFICE_MONEY,Money,金钱
+OFFICE_DATE,Date,日期
+OFFICE_NEXT_DAY,Next Day,下一天
+OFFICE_GO_OUT,Go Out (Map),外出 (地图)
+OFFICE_RANKINGS,Rankings,排行榜
+OFFICE_CONTRACTS,Contracts,通告
+OFFICE_SECRETARY,Secretary,秘书
+MSG_SECRETARY_HELLO,Hello Boss! How can I help?,老板好！有什么吩咐？
+BTN_SCHEDULE,Schedule,日程安排
+BTN_ARTIST_LIST,Artist List,艺人列表
+BTN_CLOSE,Close,关闭
+UI_ACCEPT,Accept,接受
+UI_REJECT,Reject,拒绝
+UI_REVEAL,Reveal Winner,揭晓名单
+UI_NEXT_AWARD,Next Award,下一个奖项
+UI_END_CEREMONY,End Ceremony,结束典礼
+AWARD_TITLE,THE STAR AWARDS,星光大赏
+AWARD_WINNER_PREFIX,And the winner is...,获奖者是......
+CAT_BEST_MOVIE,Best Movie,最佳电影
+CAT_BEST_SONG,Best Song,最佳歌曲
+CAT_BEST_ACTOR,Best Actor,最佳男艺人
+CAT_BEST_SINGER,Best Singer,最佳女艺人
+CHAR_CREATION_TITLE,Create Your Character,创建你的角色
+CHAR_GENDER_LABEL,Your Gender:,你的性别：
+CHAR_ORIENTATION_LABEL,Interested In:,性取向：
+CHAR_START_BUTTON,Start Career,开始生涯
+GENDER_MALE,Male,男
+GENDER_FEMALE,Female,女
+ORIENT_LIKE_MALE,Likes Males,喜欢男生
+ORIENT_LIKE_FEMALE,Likes Females,喜欢女生
+
+GENDER_OTHER,Third Gender,第三性别
+ORIENT_BISEXUAL,Bisexual,双性恋

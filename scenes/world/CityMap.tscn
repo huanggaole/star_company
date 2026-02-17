@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://citymap001"]
+
+[ext_resource type="Script" path="res://scripts/world/CityMap.gd" id="1_citymap"]
+
+[node name="CityMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_citymap")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.13, 0.4, 0.25, 1)
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="MoneyLabel" type="Label" parent="TopBar"]
+layout_mode = 2
+text = "Money: $0"
+
+[node name="DateLabel" type="Label" parent="TopBar"]
+layout_mode = 2
+text = "Date: 2000-01-01"
+
+[node name="MapLocations" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OfficeButton" type="Button" parent="MapLocations"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 400.0
+offset_right = 200.0
+offset_bottom = 450.0
+text = "Office"
+
+[node name="StudioButton" type="Button" parent="MapLocations"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 200.0
+offset_right = 500.0
+offset_bottom = 250.0
+text = "Studio"
+
+[node name="ParkButton" type="Button" parent="MapLocations"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 300.0
+offset_right = 800.0
+offset_bottom = 350.0
+text = "Park"
+
+[connection signal="pressed" from="MapLocations/OfficeButton" to="." method="_on_office_button_pressed"]
+[connection signal="pressed" from="MapLocations/StudioButton" to="." method="_on_studio_button_pressed"]
+[connection signal="pressed" from="MapLocations/ParkButton" to="." method="_on_park_button_pressed"]
