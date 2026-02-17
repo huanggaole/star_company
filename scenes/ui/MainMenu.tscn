@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://mainmenu001"]
+[gd_scene format=3 uid="uid://mainmenu001"]
 
-[ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1_mainmenu"]
-[ext_resource type="Texture2D" path="res://assets/img/title.jpg" id="2_title"]
+[ext_resource type="Script" uid="uid://c2o71aipxptt8" path="res://scripts/ui/MainMenu.gd" id="1_mainmenu"]
+[ext_resource type="Texture2D" uid="uid://cbu31qefyxshy" path="res://assets/img/title.jpg" id="2_title"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1046209630]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mainmenu")
 
-[node name="BlackBG" type="ColorRect" parent="."]
+[node name="BlackBG" type="ColorRect" parent="." unique_id=41052947]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=49498315]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +32,7 @@ texture = ExtResource("2_title")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1489860159]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -46,22 +46,22 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NewGameButton" type="Button" parent="VBoxContainer"]
+[node name="NewGameButton" type="Button" parent="VBoxContainer" unique_id=795185198]
 layout_mode = 2
 text = "New Game"
 
-[node name="LoadGameButton" type="Button" parent="VBoxContainer"]
+[node name="LoadGameButton" type="Button" parent="VBoxContainer" unique_id=1544919670]
 layout_mode = 2
 text = "Load Game"
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer" unique_id=1935587168]
 layout_mode = 2
 text = "Settings"
 
-[node name="DebugButton" type="Button" parent="VBoxContainer"]
+[node name="DebugButton" type="Button" parent="VBoxContainer" unique_id=733057006]
 layout_mode = 2
 text = "Debug Story"
 
-[node name="ExitButton" type="Button" parent="VBoxContainer"]
+[node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=1169340561]
 layout_mode = 2
 text = "Exit"

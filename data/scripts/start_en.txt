@@ -1,0 +1,20 @@
+@style mode:center
+It is 2026, eight years since the "First Year of Idols".
+
+@bg id:res://assets/img/CG-0.jpg
+@style mode:center
+The entertainment industry is now monopolized by giant capitals that care only for "traffic data" and "AI algorithms". Trending topics are bought, acting is green-screened, and songs are synthesized on assembly lines. Talented artists are suppressed, while "top traffic" stars without skill take sky-high paychecks, yet constantly collapse due to scandals.
+
+@bg id:res://assets/img/CG-1.jpg
+People's spiritual lives are ruled by "Big Data". Giants no longer care for talent, but use AI models to predict "hit rates". It doesn't matter if you look good or sing well; what matters is if your face fits the "sinking market aesthetic", if your voice has "brainwashing magic", and if your persona has "sales conversion power".
+
+@bg id:res://assets/img/CG-2.jpg
+I work at a top internet entertainment giant, but I know my days here are numbered. In the last 360 evaluation cycle, I felt a huge friction with the company's macro goals. I insisted that real humans have more potential than "synthetic digital humans" selected by data models, and I refused to transfer to the short drama department. Today is the day the 360 results are announced, and I have long prepared myself to be laid off.
+
+@bg id:res://assets/img/CG-3.jpg
+[color=#4da6ff]We regret to inform you that your performance this period is poor. Our philosophy is to work with excellent people on high ROI investments, and your presence greatly dilutes our team's talent density. We want explosive traffic growth iteratively optimized and verified by A/B testing and market feedback, not your theoretical concepts. No matter how good the acting or singing, if livestream sales are bad, it's useless. The last day of this month is your last day. I'll pull in HR later to talk to you. You don't need to hand over your work.[/color]
+
+[color=white]Fine, then I will use the most primitive method, the 'human' method, to beat your algorithms.[/color]
+
+@bg id:res://assets/img/CG-4.jpg
+[color=white]With my severance pay and years of savings, I took over my childhood friend's failing LARP shop and started my own artist company. I firmly believe that people are the core of creation. Only by adhering to people-oriented long-term values can we bring true spiritual food to people.[/color]

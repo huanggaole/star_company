@@ -1,9 +1,52 @@
 extends Control
 
-@onready var money_label = $TopBar/MoneyLabel
-@onready var date_label = $TopBar/DateLabel
+var money_label
+var date_label
+var bg_view
 
 func _ready():
+	print("DEBUG: Office script running on node: ", self.name, " path: ", self.get_path())
+	
+	if has_node("Background"):
+		bg_view = get_node("Background")
+		if bg_view:
+			# Override stretch mode to allow manual control if needed
+			# But first, let's try to update layout manually
+			get_tree().root.size_changed.connect(_update_bg_layout)
+			_update_bg_layout()
+	else:
+		printerr("CRITICAL: Background node missing in Office!")
+
+	var children = get_children()
+	print("DEBUG: Children count: ", children.size())
+	for c in children:
+		print("DEBUG: Child: ", c.name)
+
+	# User flattened the structure. Paths are now direct or using special names.
+	# "TopBar#MoneyLabel"
+	if has_node("TopBar#MoneyLabel"):
+		money_label = get_node("TopBar#MoneyLabel")
+	elif has_node("TopBar/MoneyLabel"):
+		money_label = get_node("TopBar/MoneyLabel")
+	
+	if has_node("TopBar#DateLabel"):
+		date_label = get_node("TopBar#DateLabel")
+	elif has_node("TopBar/DateLabel"):
+		date_label = get_node("TopBar/DateLabel")
+	
+	if money_label == null:
+		# Fallback search
+		money_label = find_child("MoneyLabel", true, false)
+		if not money_label: money_label = find_child("TopBar#MoneyLabel", true, false)
+		
+	if date_label == null:
+		date_label = find_child("DateLabel", true, false)
+		if not date_label: date_label = find_child("TopBar#DateLabel", true, false)
+
+	if money_label == null or date_label == null:
+		printerr("Office: Labels not connected, UI update will fail.")
+		return
+
 	_update_ui()
 	_update_secretary()
 	# Connect TimeSystem signals
@@ -54,10 +97,14 @@ func _update_secretary():
 		print("Office: Secretary set for orientation: ", orient_str)
 		# Todo: Load specific texture
 
-@onready var secretary_menu = $SecretaryMenu
+var secretary_menu
 
 func _on_secretary_button_pressed():
-	secretary_menu.visible = not secretary_menu.visible
+	if not secretary_menu:
+		secretary_menu = get_node_or_null("SecretaryMenu")
+	
+	if secretary_menu:
+		secretary_menu.visible = not secretary_menu.visible
 
 func _on_artist_list_pressed():
 	print("Open Artist List")
@@ -95,4 +142,42 @@ func _on_next_day_button_pressed():
 func _play_test_story():
 	var story_ui = STORY_UI_SCENE.instantiate()
 	add_child(story_ui)
-	story_ui.start_script(TEST_SCRIPT_PATH)
+func _update_bg_layout():
+	if not bg_view or not bg_view.texture: return
+	
+	var tex_size = bg_view.texture.get_size()
+	var screen_size = get_viewport_rect().size
+	
+	if tex_size.x == 0 or tex_size.y == 0: return
+	
+	# Logic similar to StoryUI: Fit Inside (Contain) but potentially cover depending on request.
+	# User reported "Incomplete display" (gray area).
+	# This implies they want the image to COVER the screen, or at least fit consistently.
+	# If image is top-aligned and width-fitted, but image is short, bottom is gray.
+	# If we want to FILL the screen, we should use 'max' scale (Cover).
+	# BUT StoryUI used 'min' scale (Contain) to "Show Longest Edge Fully".
+	# If Office background is a room, usually we want Cover.
+	# Let's try to make it COVER the width at least.
+	
+	# Let's stick to the StoryUI logic first (Fit Inside, Align Top) because that was "approved".
+	# If that leaves gray space, it means the image aspect ratio doesn't match screen.
+	# If user says "Incomplete", maybe they mean "Too small".
+	# Let's ensure it FITS WIDTH first.
+	
+	var scale_factor = screen_size.x / tex_size.x
+	
+	# If fitting width makes height smaller than screen, we have gray at bottom.
+	# If fitting width makes height larger, we crop bottom.
+	# Let's start with Fit Width.
+	
+	var final_width = tex_size.x * scale_factor
+	var final_height = tex_size.y * scale_factor
+	
+	# If fitting width makes it too tall (portrait image?), it will scroll off bottom?
+	# "Align Top" handles that.
+	
+	bg_view.size = Vector2(final_width, final_height)
+	bg_view.position.x = (screen_size.x - final_width) / 2
+	bg_view.position.y = 0
+	
+	print("Office BG Updated: ", bg_view.size, " Screen: ", screen_size)

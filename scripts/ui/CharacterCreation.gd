@@ -56,5 +56,24 @@ func _on_start_pressed():
 	print("Starting game with Gender: ", gender, ", Orientation: ", orientation)
 	DataManager.start_new_game(gender, orientation)
 	
-	# Transition to Office
+	# Start Opening Story
+	var lang = "en"
+	var loc = get_node("/root/LocalizationManager")
+	if loc:
+		lang = loc.current_lang
+		
+	var script_path = "res://data/scripts/start_en.txt"
+	if lang == "zh":
+		script_path = "res://data/scripts/start_sc.txt"
+		
+	var story_ui = load("res://scenes/ui/StoryUI.tscn").instantiate()
+	add_child(story_ui) # Add as child of "self" (CharacterCreation)
+	story_ui.script_completed.connect(_on_story_completed)
+	story_ui.start_script(script_path)
+	
+	# Do NOT hide self, let StoryUI cover the screen.
+	# visible = false
+
+func _on_story_completed():
 	get_tree().change_scene_to_file("res://scenes/world/Office.tscn")
+	# StoryUI will be freed automatically as it is a child of this scene

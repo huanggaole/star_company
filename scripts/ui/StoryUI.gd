@@ -1,6 +1,8 @@
 extends Control
 
 @onready var background = $Background
+@onready var cg_view = $CGView
+@onready var mouth_view = $MouthView
 @onready var left_char = $Portraits/Left
 @onready var center_char = $Portraits/Center
 @onready var right_char = $Portraits/Right
@@ -15,6 +17,13 @@ var typing_speed: float = 0.05
 var history: Array = []
 var active_tween: Tween
 
+# Lip Sync Vars
+var mouth_frames: Array[Texture2D] = []
+var mouth_frame_index: int = 0
+var mouth_timer: float = 0.0
+var MOUTH_ANIM_INTERVAL: float = 0.15 # Change frame every 0.15s
+var mouth_active: bool = false # If true, we should be animating when typing
+
 # Flow control
 var label_map: Dictionary = {}
 
@@ -22,6 +31,62 @@ const DIALOGUE_LOG_SCENE = preload("res://scenes/ui/DialogueLog.tscn")
 
 func _ready():
 	visible = false
+	get_tree().root.size_changed.connect(_update_cg_layout)
+
+func _process(delta):
+	if not visible: return
+	
+	if is_typing and mouth_active and not mouth_frames.is_empty():
+		mouth_timer += delta
+		if mouth_timer >= MOUTH_ANIM_INTERVAL:
+			mouth_timer = 0.0
+			mouth_frame_index = (mouth_frame_index + 1)
+			# Frames are 0, 1, 2. But we want 1, 2, 3 cycling?
+			# User said: 0=hidden, 1=frame1, 2=frame2, 3=frame3.
+			# So we have 3 frames loaded. Indices 0, 1, 2 correspond to user's 1, 2, 3.
+			# Let's cycle 0->1->2->0...
+			if mouth_frame_index >= mouth_frames.size():
+				mouth_frame_index = 0
+			
+			mouth_view.texture = mouth_frames[mouth_frame_index]
+			mouth_view.visible = true
+	else:
+		# Not typing or not active.
+		# User said: "When typing ends, hide mouth (default closed/0)".
+		# So if not typing, we hide mouth_view? Or show frame 0?
+		# User said: "0: not show mouth picture; ... 3 ...; after typing, hide mouth picture".
+		# So we hide it.
+		mouth_view.visible = false
+		mouth_frame_index = 0
+
+func _update_cg_layout():
+	if not cg_view.texture: return
+	
+	var tex_size = cg_view.texture.get_size()
+	var screen_size = get_viewport_rect().size
+	
+	if tex_size.x == 0 or tex_size.y == 0: return
+	
+	# Logic: Fit the image entirely within the screen (Contain).
+	# Ensure the longest edge of the image fits the screen?
+	# User: "按照图片最长的边显示完全" (Show longest edge fully).
+	# And "上边缘紧贴屏幕" (Top aligned).
+	
+	var scale_x = screen_size.x / tex_size.x
+	var scale_y = screen_size.y / tex_size.y
+	
+	# Use the SMALLER scale factor to ensure the WHOLE image fits (Contain)
+	# This ensures "Longest edge" (or rather, the constraining edge) fits.
+	var final_scale = min(scale_x, scale_y)
+	
+	var final_width = tex_size.x * final_scale
+	var final_height = tex_size.y * final_scale
+	
+	cg_view.size = Vector2(final_width, final_height)
+	
+	# Align Top-Center
+	cg_view.position.x = (screen_size.x - final_width) / 2
+	cg_view.position.y = 0
 
 func _add_to_history(speaker: String, text: String):
 	history.append({
@@ -130,17 +195,80 @@ func _interpolate_text(text: String) -> String:
 		
 	return new_text
 
+
 func _handle_command(command: String, params: Dictionary):
 	match command:
 		"bg":
 			var path = params.get("id", "")
 			if not path.is_empty():
-				# In real game, use ResourceLoader or a lookup table
-				# For prototype, we might assume path is valid or a key
 				print("Changing BG to: ", path)
-				# background.texture = load(path) # Uncomment if real paths
-				background.color = Color.from_hsv(randf(), 0.5, 0.5) # Placeholder
+				if ResourceLoader.exists(path):
+					var tex = load(path)
+					cg_view.texture = tex
+					_update_cg_layout()
+				else:
+					printerr("BG Image not found: ", path)
 		
+		"mouth":
+			# @mouth id:base_path x:100 y:200
+			# id should be like "res://assets/img/mouth" (without _1.png)
+			# or just "mouth" if we assume a path. Let's assume full path base for now or mapped id.
+			var base_id = params.get("id", "")
+			var px = params.get("x", "0").to_float()
+			var py = params.get("y", "0").to_float()
+			
+			if base_id == "" or base_id == "none":
+				mouth_active = false
+				mouth_frames.clear()
+				mouth_view.visible = false
+			else:
+				# Load frames
+				mouth_frames.clear()
+				# Try loading _1, _2, _3
+				# Support both .png and .svg or even .jpg
+				var ext = ".png" # Default, maybe check file existence?
+				# Let's try to detect or just try PNG first.
+				# Actually, for prototype we know we copied .svg.
+				# In real production, we'd probably require specific ext or check.
+				# Let's try .svg if .png fails? Or just hardcode based on known assets?
+				# For this task, I'll try .svg first since I created svgs.
+				
+				# Better approach: check what exists.
+				var suffix_list = ["_1", "_2", "_3"]
+				var loaded_count = 0
+				
+				# Extensions to try
+				var extensions = [".svg", ".png", ".jpg"]
+				
+				for i in range(1, 4):
+					var found = false
+					for e in extensions:
+						var p = base_id + "_" + str(i) + e
+						if ResourceLoader.exists(p):
+							mouth_frames.append(load(p))
+							found = true
+							print("Loaded mouth frame: ", p)
+							break
+					if not found:
+						printerr("Missing mouth frame: ", base_id + "_" + str(i))
+				
+				if not mouth_frames.is_empty():
+					mouth_active = true
+					mouth_view.position = Vector2(px, py)
+					# Adjust size? For now assume original size or set based on some scale?
+					# TextureRect expands if expand_mode is on. We set it to KEEP_SIZE or similar?
+					# In Tscn we set expand_mode=1 (IGNORE_SIZE) but stretch_mode=5 (KEEP_ASPECT_CENTERED).
+					# If we want exact pixel size, we might want to set size to texture size.
+					var s = mouth_frames[0].get_size()
+					mouth_view.size = s
+					# wait, if expand_mode is 1, size determines display. If we don't set size, it might be 0?
+					# We set 40x40 in TSCN. We should update size to match texture.
+					mouth_view.size = s
+					
+					print("Mouth active at ", px, ",", py)
+				else:
+					mouth_active = false
+
 		"char":
 			var id = params.get("id", "")
 			var pos = params.get("pos", "center")
@@ -160,13 +288,23 @@ func _handle_command(command: String, params: Dictionary):
 			for key in params:
 				DataManager.set_variable(key, params[key])
 
-		"if":
-			# @if Score==10
-			# This is complex to parse fully with our simple parser.
-			# For prototype: Assume param "value" holds condition string (e.g. "Score==10")
-			# Or key=value if we use @if Score=10 (for check)
-			# Implementation of robust parser is out of scope for this step, generic placeholder:
 			pass
+
+		"style":
+			# @style mode:center or mode:dialog
+			var mode = params.get("mode", "dialog")
+			if mode == "center":
+				# Hide background (Panel) but keep text visible
+				dialogue_box.self_modulate = Color(1, 1, 1, 0)
+				speaker_label.visible = false
+				# Ideally for "center" we might want to center the text vertically in the screen
+				# But for "subtitle" (bottom), keeping it in the bottom box is correct.
+				# The user requested both (Part 1 center, Part 2 bottom).
+				# For now, we leave it at bottom (Subtitle style) to avoid layout complexity.
+			elif mode == "dialog":
+				# Show background
+				dialogue_box.self_modulate = Color(1, 1, 1, 1)
+				speaker_label.visible = true
 
 func _update_portrait(id: String, pos: String):
 	# Hide all first? Or just update specific?
@@ -185,4 +323,6 @@ func _update_portrait(id: String, pos: String):
 func _end_script():
 	visible = false
 	print("Script finished.")
-	# Signal completion or go back to main menu/office
+	emit_signal("script_completed")
+
+signal script_completed

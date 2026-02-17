@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://office001"]
+[gd_scene format=3 uid="uid://office001"]
 
-[ext_resource type="Script" path="res://scripts/world/Office.gd" id="1_office"]
+[ext_resource type="Script" uid="uid://1emjl5lmo2ss" path="res://scripts/world/Office.gd" id="1_office"]
+[ext_resource type="Texture2D" uid="uid://buqh8xvnih00d" path="res://assets/img/office.jpg" id="2_bg"]
 
-[node name="Office" type="Control"]
+[node name="Office" type="Control" unique_id=468220424]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,31 +12,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_office")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.18, 0.2, 0.25, 1)
-
-[node name="TopBar" type="HBoxContainer" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1736344401]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 40.0
+offset_bottom = 659.0
 grow_horizontal = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
 
-[node name="MoneyLabel" type="Label" parent="TopBar"]
-layout_mode = 2
+[node name="TopBar#MoneyLabel" type="Label" parent="." unique_id=2014305609]
+layout_mode = 0
 text = "Money: $0"
 
-[node name="DateLabel" type="Label" parent="TopBar"]
-layout_mode = 2
+[node name="TopBar#DateLabel" type="Label" parent="." unique_id=721171096]
+layout_mode = 0
 text = "Date: 2000-01-01"
 
-[node name="Actions" type="VBoxContainer" parent="."]
+[node name="Actions" type="VBoxContainer" parent="." unique_id=230641767]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -45,35 +39,35 @@ offset_right = 200.0
 offset_bottom = 100.0
 grow_vertical = 2
 
-[node name="ScheduleButton" type="Button" parent="Actions"]
+[node name="ScheduleButton" type="Button" parent="Actions" unique_id=2134692328]
 layout_mode = 2
 text = "Manage Schedule"
 
-[node name="ArtistsButton" type="Button" parent="Actions"]
+[node name="ArtistsButton" type="Button" parent="Actions" unique_id=1363897510]
 layout_mode = 2
 text = "Artists"
 
-[node name="NextDayButton" type="Button" parent="Actions"]
+[node name="NextDayButton" type="Button" parent="Actions" unique_id=2058539013]
 layout_mode = 2
 text = "Next Day"
 
-[node name="GoOutButton" type="Button" parent="Actions"]
+[node name="GoOutButton" type="Button" parent="Actions" unique_id=984414488]
 layout_mode = 2
 text = "Go Out (Map)"
 
-[node name="RankingsButton" type="Button" parent="Actions"]
+[node name="RankingsButton" type="Button" parent="Actions" unique_id=1636048669]
 layout_mode = 2
 text = "Rankings"
 
-[node name="ContractsButton" type="Button" parent="Actions"]
+[node name="ContractsButton" type="Button" parent="Actions" unique_id=1008441515]
 layout_mode = 2
 text = "Contracts"
 
-[node name="SecretaryButton" type="Button" parent="Actions"]
+[node name="SecretaryButton" type="Button" parent="Actions" unique_id=1726930429]
 layout_mode = 2
 text = "Secretary"
 
-[node name="SecretaryMenu" type="Panel" parent="."]
+[node name="SecretaryMenu" type="Panel" parent="." unique_id=1514902565]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -88,7 +82,7 @@ offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SecretaryMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SecretaryMenu" unique_id=1790027627]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -100,36 +94,36 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="SecretaryMenu/VBoxContainer"]
+[node name="Label" type="Label" parent="SecretaryMenu/VBoxContainer" unique_id=937954050]
 layout_mode = 2
 text = "Secretary Actions"
 horizontal_alignment = 1
 
-[node name="ArtistListButton" type="Button" parent="SecretaryMenu/VBoxContainer"]
+[node name="ArtistListButton" type="Button" parent="SecretaryMenu/VBoxContainer" unique_id=198672803]
 layout_mode = 2
 text = "Artist List"
 
-[node name="ScheduleButton" type="Button" parent="SecretaryMenu/VBoxContainer"]
+[node name="ScheduleButton" type="Button" parent="SecretaryMenu/VBoxContainer" unique_id=291132837]
 layout_mode = 2
 text = "Schedule"
 
-[node name="RestButton" type="Button" parent="SecretaryMenu/VBoxContainer"]
+[node name="RestButton" type="Button" parent="SecretaryMenu/VBoxContainer" unique_id=317575469]
 layout_mode = 2
 text = "Rest"
 
-[node name="TestStoryButton" type="Button" parent="SecretaryMenu/VBoxContainer"]
+[node name="TestStoryButton" type="Button" parent="SecretaryMenu/VBoxContainer" unique_id=1352585463]
 layout_mode = 2
 text = "Debug: Play Test Story"
 
-[node name="CloseButton" type="Button" parent="SecretaryMenu/VBoxContainer"]
+[node name="CloseButton" type="Button" parent="SecretaryMenu/VBoxContainer" unique_id=27556811]
 layout_mode = 2
 text = "Close"
 
-[connection signal="pressed" from="Actions/SecretaryButton" to="." method="_on_secretary_button_pressed"]
+[connection signal="pressed" from="Actions/NextDayButton" to="." method="_on_next_day_button_pressed"]
 [connection signal="pressed" from="Actions/GoOutButton" to="." method="_on_go_out_pressed"]
 [connection signal="pressed" from="Actions/RankingsButton" to="." method="_on_rankings_pressed"]
 [connection signal="pressed" from="Actions/ContractsButton" to="." method="_on_contracts_pressed"]
-[connection signal="pressed" from="Actions/NextDayButton" to="." method="_on_next_day_button_pressed"]
+[connection signal="pressed" from="Actions/SecretaryButton" to="." method="_on_secretary_button_pressed"]
 [connection signal="pressed" from="SecretaryMenu/VBoxContainer/ArtistListButton" to="." method="_on_artist_list_pressed"]
 [connection signal="pressed" from="SecretaryMenu/VBoxContainer/ScheduleButton" to="." method="_on_schedule_pressed"]
 [connection signal="pressed" from="SecretaryMenu/VBoxContainer/TestStoryButton" to="." method="_play_test_story"]

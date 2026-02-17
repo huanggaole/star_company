@@ -20,6 +20,23 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="CGView" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MouthView" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Portraits" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -102,7 +119,7 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/normal_font_size = 24
 text = "Dialogue text goes here..."
 
 [node name="LogButton" type="Button" parent="."]

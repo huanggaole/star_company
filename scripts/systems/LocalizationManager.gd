@@ -5,7 +5,7 @@ signal language_changed
 const LANG_EN = "en"
 const LANG_ZH = "zh"
 
-var current_lang = LANG_EN
+var current_lang = LANG_ZH
 var translations = {}
 
 func _ready():
