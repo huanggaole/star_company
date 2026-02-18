@@ -80,6 +80,7 @@ func _update_ui():
 	$Actions/RankingsButton.text = loc.get_text("OFFICE_RANKINGS")
 	$Actions/ContractsButton.text = loc.get_text("OFFICE_CONTRACTS")
 	$Actions/SecretaryButton.text = loc.get_text("OFFICE_SECRETARY")
+	$Actions/ArtistLeaderboardButton.text = loc.get_text("OFFICE_ARTIST_LEADERBOARD")
 
 func _on_day_changed(_date):
 	_update_ui()
@@ -117,6 +118,7 @@ const RANKING_UI_SCENE = preload("res://scenes/ui/RankingUI.tscn")
 const SCHEDULE_UI_SCENE = preload("res://scenes/ui/ScheduleUI.tscn")
 const CONTRACT_UI_SCENE = preload("res://scenes/ui/ContractUI.tscn")
 const AWARDS_UI_SCENE = preload("res://scenes/ui/AwardsUI.tscn")
+const ARTIST_LEADERBOARD_UI_SCENE = preload("res://scenes/ui/ArtistLeaderboardUI.tscn")
 
 func _on_schedule_pressed():
 	var schedule_ui = SCHEDULE_UI_SCENE.instantiate()
@@ -129,6 +131,10 @@ func _on_contracts_pressed():
 func _on_rankings_pressed():
 	var ranking_ui = RANKING_UI_SCENE.instantiate()
 	add_child(ranking_ui)
+
+func _on_artist_leaderboard_pressed():
+	var leaderboard_ui = ARTIST_LEADERBOARD_UI_SCENE.instantiate()
+	add_child(leaderboard_ui)
 
 func _on_go_out_pressed():
 	if ResourceLoader.exists(CITY_MAP_SCENE_PATH):

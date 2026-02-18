@@ -67,6 +67,10 @@ text = "Contracts"
 layout_mode = 2
 text = "Secretary"
 
+[node name="ArtistLeaderboardButton" type="Button" parent="Actions"]
+layout_mode = 2
+text = "Artist Leaderboard"
+
 [node name="SecretaryMenu" type="Panel" parent="." unique_id=1514902565]
 visible = false
 layout_mode = 1
@@ -124,6 +128,7 @@ text = "Close"
 [connection signal="pressed" from="Actions/RankingsButton" to="." method="_on_rankings_pressed"]
 [connection signal="pressed" from="Actions/ContractsButton" to="." method="_on_contracts_pressed"]
 [connection signal="pressed" from="Actions/SecretaryButton" to="." method="_on_secretary_button_pressed"]
+[connection signal="pressed" from="Actions/ArtistLeaderboardButton" to="." method="_on_artist_leaderboard_pressed"]
 [connection signal="pressed" from="SecretaryMenu/VBoxContainer/ArtistListButton" to="." method="_on_artist_list_pressed"]
 [connection signal="pressed" from="SecretaryMenu/VBoxContainer/ScheduleButton" to="." method="_on_schedule_pressed"]
 [connection signal="pressed" from="SecretaryMenu/VBoxContainer/TestStoryButton" to="." method="_play_test_story"]
