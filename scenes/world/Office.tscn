@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://1emjl5lmo2ss" path="res://scripts/world/Office.gd" id="1_office"]
 [ext_resource type="Texture2D" uid="uid://buqh8xvnih00d" path="res://assets/img/office.jpg" id="2_bg"]
+[ext_resource type="PackedScene" uid="uid://c8btopbardate" path="res://scenes/ui/TopBar.tscn" id="3_topbar"]
 
 [node name="Office" type="Control" unique_id=468220424]
 layout_mode = 3
@@ -21,13 +22,17 @@ grow_horizontal = 2
 texture = ExtResource("2_bg")
 expand_mode = 1
 
-[node name="TopBar#MoneyLabel" type="Label" parent="." unique_id=2014305609]
+[node name="TopBar" parent="." instance=ExtResource("3_topbar")]
 layout_mode = 0
-text = "Money: $0"
-
-[node name="TopBar#DateLabel" type="Label" parent="." unique_id=721171096]
-layout_mode = 0
-text = "Date: 2000-01-01"
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 60.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Actions" type="VBoxContainer" parent="." unique_id=230641767]
 layout_mode = 1
@@ -54,6 +59,10 @@ text = "Next Day"
 [node name="GoOutButton" type="Button" parent="Actions" unique_id=984414488]
 layout_mode = 2
 text = "Go Out (Map)"
+
+[node name="SaveButton" type="Button" parent="Actions" unique_id=9876543210]
+layout_mode = 2
+text = "Save Game"
 
 [node name="RankingsButton" type="Button" parent="Actions" unique_id=1636048669]
 layout_mode = 2
@@ -125,6 +134,7 @@ text = "Close"
 
 [connection signal="pressed" from="Actions/NextDayButton" to="." method="_on_next_day_button_pressed"]
 [connection signal="pressed" from="Actions/GoOutButton" to="." method="_on_go_out_pressed"]
+[connection signal="pressed" from="Actions/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Actions/RankingsButton" to="." method="_on_rankings_pressed"]
 [connection signal="pressed" from="Actions/ContractsButton" to="." method="_on_contracts_pressed"]
 [connection signal="pressed" from="Actions/SecretaryButton" to="." method="_on_secretary_button_pressed"]

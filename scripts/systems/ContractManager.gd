@@ -21,9 +21,8 @@ func _ready():
 	generate_new_contracts()
 
 func _on_day_changed(_date):
-	# Simple logic: 20% chance to generate a new contract each day
-	if randf() < 0.2:
-		generate_new_contracts(1)
+	# Removed daily random generation because we now use WeeklySystem to refresh logic
+	pass
 
 func generate_new_contracts(count: int = 3):
 	for i in range(count):

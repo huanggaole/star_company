@@ -32,5 +32,11 @@ func advance_day():
 func add_artist(artist_data: Resource):
 	artists.append(artist_data)
 
+func get_weekday() -> int:
+	# Assume 2024-01-01 is Monday (index 0).
+	# Custom calendar: 12 months, 30 days per month.
+	var total_days = (current_date.year - 2024) * 360 + (current_date.month - 1) * 30 + (current_date.day - 1)
+	return total_days % 7
+
 func get_date_string() -> String:
 	return "%04d-%02d-%02d" % [current_date.year, current_date.month, current_date.day]

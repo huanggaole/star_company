@@ -157,20 +157,39 @@ func set_variable(key: String, value):
 		dynamic_data.variables[key] = value
 	print("Set variable ", key, " to ", value)
 
-func save_game():
-	if dynamic_data:
-		var error = ResourceSaver.save(dynamic_data, SAVE_PATH)
-		if error == OK:
-			print("Game Saved Successfully.")
-		else:
-			printerr("Failed to save game: ", error)
+func get_save_path(slot_id: int) -> String:
+	return "user://savegame_%d.tres" % slot_id
 
-func load_game():
-	if ResourceLoader.exists(SAVE_PATH):
-		dynamic_data = ResourceLoader.load(SAVE_PATH)
-		print("Game Loaded Successfully.")
+func save_game(slot_id: int = 0):
+	if dynamic_data:
+		var error = ResourceSaver.save(dynamic_data, get_save_path(slot_id))
+		if error == OK:
+			print("Game Saved Successfully to slot ", slot_id)
+		else:
+			printerr("Failed to save game to slot ", slot_id, ": ", error)
+
+func load_game(slot_id: int = 0):
+	var path = get_save_path(slot_id)
+	if ResourceLoader.exists(path):
+		dynamic_data = ResourceLoader.load(path)
+		print("Game Loaded Successfully from slot ", slot_id)
 	else:
-		print("No save file found.")
+		print("No save file found for slot ", slot_id)
+
+func get_save_info(slot_id: int) -> String:
+	var path = get_save_path(slot_id)
+	if not ResourceLoader.exists(path):
+		return "Empty"
+		
+	# Try to load just to get the string, or we load the full Resource.
+	var test_data = ResourceLoader.load(path)
+	if test_data and test_data is DynamicData:
+		var date_str = test_data.get_date_string() if test_data.has_method("get_date_string") else "Unknown Date"
+		var comp_name = test_data.company_name if "company_name" in test_data else "Unknown"
+		var money = test_data.money if "money" in test_data else 0
+		return "%s\n%s  |  $%d" % [comp_name, date_str, money]
+		
+	return "Corrupted Save"
 
 func get_money() -> int:
 	if dynamic_data:

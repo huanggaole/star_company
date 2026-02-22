@@ -8,9 +8,9 @@ func _ready():
 	_update_ui()
 
 func _update_ui():
-	# Use autoloads to get data
-	$TopBar/DateLabel.text = TimeSystem.get_date_string() if TimeSystem.has_method("get_date_string") else DataManager.get_current_date()
-	$TopBar/MoneyLabel.text = "Money: $%d" % DataManager.get_money()
+	var topbar = get_node_or_null("TopBar")
+	if topbar and topbar.has_method("refresh_ui"):
+		topbar.refresh_ui()
 
 func _on_location_pressed(location_name: String):
 	print("Traveling to: ", location_name)

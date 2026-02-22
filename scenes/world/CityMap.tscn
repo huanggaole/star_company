@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://citymap001"]
 
 [ext_resource type="Script" path="res://scripts/world/CityMap.gd" id="1_citymap"]
+[ext_resource type="PackedScene" uid="uid://c8btopbardate" path="res://scenes/ui/TopBar.tscn" id="2_topbar"]
 
 [node name="CityMap" type="Control"]
 layout_mode = 3
@@ -20,20 +21,17 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.13, 0.4, 0.25, 1)
 
-[node name="TopBar" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 40.0
-grow_horizontal = 2
-
-[node name="MoneyLabel" type="Label" parent="TopBar"]
-layout_mode = 2
-text = "Money: $0"
-
-[node name="DateLabel" type="Label" parent="TopBar"]
-layout_mode = 2
-text = "Date: 2000-01-01"
+[node name="TopBar" parent="." instance=ExtResource("2_topbar")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 60.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="MapLocations" type="Control" parent="."]
 layout_mode = 1

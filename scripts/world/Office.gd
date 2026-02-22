@@ -1,7 +1,6 @@
 extends Control
 
-var money_label
-var date_label
+var topbar
 var bg_view
 
 func _ready():
@@ -23,29 +22,9 @@ func _ready():
 		print("DEBUG: Child: ", c.name)
 
 	# User flattened the structure. Paths are now direct or using special names.
-	# "TopBar#MoneyLabel"
-	if has_node("TopBar#MoneyLabel"):
-		money_label = get_node("TopBar#MoneyLabel")
-	elif has_node("TopBar/MoneyLabel"):
-		money_label = get_node("TopBar/MoneyLabel")
-	
-	if has_node("TopBar#DateLabel"):
-		date_label = get_node("TopBar#DateLabel")
-	elif has_node("TopBar/DateLabel"):
-		date_label = get_node("TopBar/DateLabel")
-	
-	if money_label == null:
-		# Fallback search
-		money_label = find_child("MoneyLabel", true, false)
-		if not money_label: money_label = find_child("TopBar#MoneyLabel", true, false)
-		
-	if date_label == null:
-		date_label = find_child("DateLabel", true, false)
-		if not date_label: date_label = find_child("TopBar#DateLabel", true, false)
-
-	if money_label == null or date_label == null:
-		printerr("Office: Labels not connected, UI update will fail.")
-		return
+	topbar = get_node_or_null("TopBar")
+	if not topbar:
+		printerr("Office: TopBar not found.")
 
 	_update_ui()
 	_update_secretary()
@@ -70,12 +49,17 @@ func _update_ui():
 	var loc = get_node("/root/LocalizationManager")
 	if not loc: return
 	
-	# Access DataManager using the autoload name
-	money_label.text = loc.get_text("OFFICE_MONEY") + ": $%d" % DataManager.get_money()
-	date_label.text = loc.get_text("OFFICE_DATE") + ": %s" % DataManager.get_current_date()
+	if topbar and topbar.has_method("refresh_ui"):
+		topbar.refresh_ui()
 	
 	# Update button text
 	$Actions/NextDayButton.text = loc.get_text("OFFICE_NEXT_DAY")
+	
+	if has_node("Actions/SaveButton"):
+		var save_text = loc.get_text("OFFICE_SAVE_GAME")
+		if save_text == "OFFICE_SAVE_GAME": save_text = "Save Game"
+		$Actions/SaveButton.text = save_text
+		
 	$Actions/GoOutButton.text = loc.get_text("OFFICE_GO_OUT")
 	$Actions/RankingsButton.text = loc.get_text("OFFICE_RANKINGS")
 	$Actions/ContractsButton.text = loc.get_text("OFFICE_CONTRACTS")
@@ -141,6 +125,13 @@ func _on_go_out_pressed():
 		get_tree().change_scene_to_file(CITY_MAP_SCENE_PATH)
 	else:
 		printerr("CityMap scene not found")
+
+const SAVE_LOAD_UI_SCENE = preload("res://scenes/ui/SaveLoadUI.tscn")
+
+func _on_save_button_pressed():
+	var save_ui = SAVE_LOAD_UI_SCENE.instantiate()
+	save_ui.mode = "save"
+	add_child(save_ui)
 
 func _on_next_day_button_pressed():
 	TimeSystem.advance_day()

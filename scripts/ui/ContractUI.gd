@@ -10,6 +10,10 @@ func _update_list():
 	for child in contract_container.get_children():
 		child.queue_free()
 		
+	var topbar = get_node_or_null("TopBar")
+	if topbar and topbar.has_method("refresh_ui"):
+		topbar.refresh_ui()
+		
 	var contracts = ContractManager.available_contracts
 	for i in range(contracts.size()):
 		var c = contracts[i]

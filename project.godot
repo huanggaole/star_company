@@ -24,6 +24,7 @@ CompanyManager="*res://scripts/company/CompanyManager.gd"
 ContractManager="*res://scripts/systems/ContractManager.gd"
 AwardsManager="*res://scripts/systems/AwardsManager.gd"
 LocalizationManager="*res://scripts/systems/LocalizationManager.gd"
+WeeklySystem="*res://scripts/systems/WeeklySystem.gd"
 
 [physics]
 

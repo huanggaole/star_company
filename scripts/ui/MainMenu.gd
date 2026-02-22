@@ -43,12 +43,12 @@ func _on_settings_pressed():
 	var settings_ui = SETTINGS_UI_SCENE.instantiate()
 	add_child(settings_ui)
 
+const SAVE_LOAD_UI_SCENE = preload("res://scenes/ui/SaveLoadUI.tscn")
+
 func _on_load_game_pressed():
-	DataManager.load_game()
-	if ResourceLoader.exists(OFFICE_SCENE_PATH):
-		get_tree().change_scene_to_file(OFFICE_SCENE_PATH)
-	else:
-		print("Would change to Office scene after load.")
+	var load_ui = SAVE_LOAD_UI_SCENE.instantiate()
+	load_ui.mode = "load"
+	add_child(load_ui)
 
 func _on_exit_pressed():
 	get_tree().quit()
